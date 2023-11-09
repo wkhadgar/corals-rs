@@ -16,8 +16,10 @@ fn main() -> Result<(), String> {
             (canvas.window().size().1 / 2) as f64,
         ),
         3,
-        90.0,
-        10f64.powi(2),
+        50.0,
+        350.0,
+        15.0,
+        true,
     );
 
     'running: loop {
@@ -34,9 +36,9 @@ fn main() -> Result<(), String> {
         }
         org.fill_gaps();
         org.expand();
-        org.draw(&mut canvas, false);
+        org.draw(&mut canvas, true);
         canvas.present();
-        std::thread::sleep(std::time::Duration::from_millis(1000 / 120));
+        std::thread::sleep(std::time::Duration::from_millis(1000 / 60));
     }
 
     Ok(())
@@ -49,12 +51,16 @@ fn sdl_init() -> Result<(sdl2::render::WindowCanvas, sdl2::EventPump), String> {
     let window = video_subsystem
         .window("Behaviours", 800, 600)
         .position_centered()
-        .opengl()
+        .vulkan()
         .fullscreen_desktop()
         .build()
         .map_err(|e| e.to_string())?;
     let event_pump = sdl_context.event_pump()?;
-    let canvas = window.into_canvas().build().map_err(|e| e.to_string())?;
+    let canvas = window
+        .into_canvas()
+        .accelerated()
+        .build()
+        .map_err(|e| e.to_string())?;
 
     Ok((canvas, event_pump))
 }
