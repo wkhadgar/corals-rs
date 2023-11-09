@@ -18,7 +18,7 @@ fn main() -> Result<(), String> {
         3,
         50.0,
         350.0,
-        15.0,
+        10.0,
         true,
     );
 
@@ -36,9 +36,8 @@ fn main() -> Result<(), String> {
         }
         org.fill_gaps();
         org.expand();
-        org.draw(&mut canvas, true);
+        org.draw(&mut canvas, false);
         canvas.present();
-        std::thread::sleep(std::time::Duration::from_millis(1000 / 60));
     }
 
     Ok(())
@@ -49,15 +48,20 @@ fn sdl_init() -> Result<(sdl2::render::WindowCanvas, sdl2::EventPump), String> {
 
     let video_subsystem = sdl_context.video()?;
     let window = video_subsystem
-        .window("Behaviours", 800, 600)
+        .window(
+            "Behaviours",
+            video_subsystem.display_bounds(0).unwrap().width(),
+            video_subsystem.display_bounds(0).unwrap().height(),
+        )
         .position_centered()
-        .vulkan()
-        .fullscreen_desktop()
+        .opengl()
+        .fullscreen()
         .build()
         .map_err(|e| e.to_string())?;
     let event_pump = sdl_context.event_pump()?;
     let canvas = window
         .into_canvas()
+        .present_vsync()
         .accelerated()
         .build()
         .map_err(|e| e.to_string())?;
