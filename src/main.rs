@@ -6,6 +6,7 @@ use crate::vectors::Vector2;
 
 mod cells;
 mod organism;
+mod structures;
 mod vectors;
 
 fn main() -> Result<(), String> {
@@ -17,8 +18,8 @@ fn main() -> Result<(), String> {
         ),
         3,
         50.0,
-        350.0,
-        10.0,
+        70.0,
+        1.0,
         true,
     );
 

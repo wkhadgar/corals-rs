@@ -67,9 +67,7 @@ impl Organism {
             self.cells[i].velocity = self.cells[i].velocity * 0.8;
         }
 
-        for i in 0..self.cells.len() {
-            self.cells[i].react();
-        }
+        self.cells.iter_mut().for_each(|c| c.react());
 
         self.bounds = self
             .cells
@@ -78,7 +76,7 @@ impl Organism {
             .collect::<Vec<Point>>();
     }
     pub fn fill_gaps(&mut self) {
-        let noisiness = 0.3;
+        let noisiness = 0.35;
         let amount = self.cells.len() - 1;
 
         let mut offset = 0;

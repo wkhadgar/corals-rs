@@ -29,8 +29,8 @@ impl Vector2 {
         self.y.atan2(self.x).to_degrees()
     }
 
-    pub fn get_components(&self) -> (f64, f64) {
-        (self.x, self.y)
+    pub fn get_components(&self) -> Vec<f64> {
+        vec![self.x, self.y]
     }
 
     pub fn offset(&mut self, x: f64, y: f64) {
